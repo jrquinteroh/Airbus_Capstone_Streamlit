@@ -120,95 +120,85 @@ if page == "Home":
     st.markdown("<h1 style='text-align: center;'>Fuel Leak Detection in Aircraft (A400M) Information</h1>", unsafe_allow_html=True)
 
     col1, col2, col3 = st.columns(3)
+    
     with col1:
+        st.markdown("<div class='section-title'>Welcome to Our Leak Detection App!</div>", unsafe_allow_html=True)
+        st.markdown('''
+        <div class='content-text'>
+This app is designed to help you identify potential fuel leaks in your aircrafts during flight operations, particularly during the cruise phase when the aircraft is most stable. Early detection is critical to prevent operational inefficiencies, reduce maintenance costs, and enhance overall safety.
+        </div>
+    ''', unsafe_allow_html=True)
 
-        # Section 1: What is the Problem?
-        st.markdown('<div class="section-title">What is the Problem?</div>', unsafe_allow_html=True)
-        st.markdown(
-            """
-            <div class="content-text">
-            Fuel leaks are typically detected through visual inspections either before takeoff or after landing. However, by the time a leak is visible, it already poses significant safety and economic risks. Additionally, undetected mid-flight leaks can compromise aircraft stability, leading to emergency landings and reputational damage for the airline and Airbus.<br><br>
-            Current leak detection methods rely on:
-            <ul class="bullet-list">
-                <li>Fuel-on-board (FOB) comparisons</li>
-                <li>Flight Management System (FMSB) predictions</li>
-                <li>Sensor data</li>
-            </ul>
-            Nonetheless, these methods have limitations, such as delayed detection, sensor blind spots, and false positives due to environmental conditions.<br><br>
-            Our proposal leverages machine learning models to enhance predictive capabilities. By focusing on the aircraft's cruising phase—where factors such as pitch and roll are minimized—we can improve accuracy and detect leaks at an early stage. This proactive approach will:
-            <ul class="bullet-list">
-                <li>Reduce inspection time and costs</li>
-                <li>Optimize flight planning</li>
-                <li>Ensure safety while minimizing the financial impact of fuel loss</li>
-            </ul>
-            </div>
-            """,
-            unsafe_allow_html=True
-        )
-        st.markdown('</div>', unsafe_allow_html=True)
 
     with col2:
-        # Section 2: How Are We Targeting It?
-        st.markdown('<div class="section-title">How Are We Targeting It?</div>', unsafe_allow_html=True)
-        st.markdown(
-            """
-            <div class="content-text">
-            We faced three major challenges:
-            <ul class="bullet-list">
-                <li>Significant feature differences across datasets, particularly between a flight-test aircraft dataset and in-service aircraft datasets</li>
-                <li>A high proportion of null values requiring imputation or removal</li>
-                <li>The absence of a target variable in most datasets, necessitating feature engineering to create an equivalent target variable for modeling</li>
-            </ul>
-            </div>
-            """,
-            unsafe_allow_html=True
-        )
-        st.markdown('</div>', unsafe_allow_html=True)
+
+
+        st.markdown("<div class='section-title'>How Are We Solving The Problem?</div>", unsafe_allow_html=True)
+        st.markdown('''
+        <div class='content-text'>
+        We addressed these challenges by developing a powerful machine learning model specifically trained to detect leaks based on various calculated features derived from the raw data. 
+        The process included thorough data cleaning, feature engineering, and the development of three different approaches for detecting leaks:
+        <ul>
+        <li>Leak detection by comparing Fuel On Board (FOB) vs. Estimated FOB.</li>
+        <li>Leak detection by analyzing differences in engine consumption (FUEL_FLAG).</li>
+        <li>Leak detection by comparing Tank FOB vs. Estimated FOB.</li>
+        </ul>
+        </div>
+    ''', unsafe_allow_html=True)
 
     with col3:
-        # Section 3: How Are We Solving It?
-        st.markdown('<div class="section-title">How Are We Solving It?</div>', unsafe_allow_html=True)
-        st.markdown(
-            """
-            <div class="content-text">
-            After defining our target variable and preprocessing the data, we tested six different model types for fuel leak detection:
-            <ul class="bullet-list">
-                <li>Random Forest</li>
-                <li>Logistic Regression</li>
-                <li>Support Vector Machines (SVMs)</li>
-                <li>XGBoost</li>
-                <li>Autoencoders</li>
-                <li>Isolation Forest</li>
-            </ul>
-            Each model had its strengths, but after extensive testing and hyperparameter tuning, XGBoost consistently outperformed the others, capturing a high percentage of actual leaks while minimizing false positives.<br><br>
-            For model training, we:
-            <ul class="bullet-list">
-                <li>Removed redundant features to avoid tampering with our results, specifically the binary features used to build our target</li>
-                <li>Maintained the sequential integrity of the data during train-test splits with a ‘fixed’ split, due to the time series nature of our data</li>
-                <li>Applied Min-Max scaling to improve optimization</li>
-            </ul>
-            Hyperparameter tuning was conducted using Optuna, allowing efficient exploration of configurations. Once optimized, XGBoost delivered the best performance, making it our final choice to construct predictions.
+# Centered Conclusion Section
+         st.markdown('''
+        <div style="display: flex; justify-content: center; margin-top: 30px;">
+            <div style="border: 2px solid #ccc; padding: 20px; width: 300px; height: 300px; display: flex; align-items: center; justify-content: center; text-align: center;">
+                <div>
+                    <h2>WHY?</h2>
+                    <p>With our Leak Detection App, you can detect leaks early, reduce operational costs, and enhance the safety and reliability of your aircrafts.<br><br>
+                    Thank you for choosing our app powered by SKYWISE to enhance your operations!</p>
+                </div>
             </div>
-            """,
-            unsafe_allow_html=True
-        )
-        st.markdown('</div>', unsafe_allow_html=True)
+        </div>
+    ''', unsafe_allow_html=True)
+
+
 
 
 # Page 2: Model Input
 elif page == "Model Input":
+    st.markdown("<h1 style='text-align: center;'>Upload Data for Prediction</h1>", unsafe_allow_html=True)
+    
+    # Adding your text for explanation
+    st.markdown("### About Our Model")
+    st.write("""
+    #### The Model We Use - XGBoost
+    XGBoost was chosen for its robustness in handling non-linear relationships and delivering high accuracy. 
+    It works by building an ensemble of decision trees, where each model improves upon the errors of the previous one. 
+    To achieve the best performance, we used Optuna for hyperparameter tuning, allowing us to efficiently explore different configurations and optimize the model.
+    """)
+
+    st.markdown("### Model Performance")
+    st.write("""
+    The performance of our model is evaluated using the following metrics:
+    - **Accuracy**: 94%
+    - **Precision**: 91.2%
+    - **Recall**: 64%
+    - **F1-Score**: 75%
+    - **ROC-AUC**: 84.4%
+
+    These metrics show that our model effectively detects fuel leaks with high precision, ensuring reliable results.
+    """)
+
     st.markdown("<h1 style='text-align: center;'>Upload Data for Prediction</h1>", unsafe_allow_html=True)
     uploaded_file = st.file_uploader("Choose a CSV or Parquet file", type=["csv", "parquet"])
     if uploaded_file:
         data = pd.read_csv(uploaded_file) if uploaded_file.name.endswith('.csv') else pd.read_parquet(uploaded_file)
         st.session_state["data"] = data
         st.success("File uploaded successfully!", icon="✅")
-    st.markdown("### About Our Model")
-    st.write("XGBoost chosen for...")
 
-# Page 3: Prediction & Recommendations
+
+    # Page 3: Prediction & Recommendations
 elif page == "Prediction & Recommendations":
-    st.markdown("<h1 style='text-align: center;'>Prediction Results and Next Steps</h1>", unsafe_allow_html=True)
+    st.markdown("<h1 style='text-align: center; color: #003087;'>Prediction Results and Next Steps</h1>", unsafe_allow_html=True)
     if "data" in st.session_state:
         data = st.session_state["data"]
         
@@ -283,104 +273,29 @@ elif page == "Prediction & Recommendations":
                 prediction_df = pd.DataFrame({
                     "UTC_TIME": data["UTC_TIME"],
                     **{col: data[col] for col in fuel_used_cols},
-                    "Prediction (0 = No Leak, 1 = Leak)": prediction,
-                    "Result": ["Leak" if pred == 1 else "No Leak" for pred in prediction],
                     "3% Threshold Violation": threshold_violations
                 })
-                
-                # Display the prediction results in a styled table
-                st.write("### Prediction Output")
-                st.markdown(
-                    """
-                    <style>
-                    .prediction-table {
-                        font-size: 18px !important;
-                        width: 100%;
-                    }
-                    .prediction-table th {
-                        background-color: #1976D2 !important;
-                        color: white !important;
-                        font-size: 20px !important;
-                        padding: 10px !important;
-                    }
-                    .prediction-table td {
-                        padding: 10px !important;
-                    }
-                    .leak {
-                        color: #1976D2 !important;
-                        font-weight: bold !important;
-                    }
-                    .no-leak {
-                        color: #2E7D32 !important;
-                        font-weight: bold !important;
-                    }
-                    </style>
-                    """,
-                    unsafe_allow_html=True
-                )
-                
-                def style_result(val):
-                    color = '#1976D2' if val == "Leak" else '#2E7D32'
-                    return f'color: {color}; font-weight: bold;'
-                
-                styled_df = prediction_df.style.applymap(
-                    style_result, subset=["Result"]
-                ).set_table_styles([
-                    {'selector': 'th', 'props': [('background-color', '#1976D2'), ('color', 'white'), ('font-size', '20px'), ('padding', '10px')]},
-                    {'selector': 'td', 'props': [('padding', '10px'), ('font-size', '18px')]}
-                ])
-                
-                st.dataframe(styled_df, use_container_width=True, height=400)
-                
-                # Summarize the prediction for the sequence based on fuel_flag
-                if data["fuel_flag"].sum() > 0:
-                    st.write("**Prediction Summary: Leak Detected!**", unsafe_allow_html=True)
-                    
-                    # Summarize unique engines with threshold violations and their directions
-                    engine_violations = {}
-                    for violation, direction in zip(threshold_violations, violation_directions):
-                        if violation != "None":
-                            engines = violation.split(", ")
-                            directions = direction.split(", ")
-                            for eng, dir in zip(engines, directions):
-                                direction_clean = dir.split('(')[1].replace(')', '')
-                                if eng in engine_violations:
-                                    if engine_violations[eng] != "above":
-                                        engine_violations[eng] = direction_clean
-                                else:
-                                    engine_violations[eng] = direction_clean
-                    
-                    # Create the summary message with unique engines
-                    if engine_violations:
-                        violation_summary = [f"{eng} ({direction})" for eng, direction in engine_violations.items()]
-                        engine_message = f"Engines with potential leaks: {', '.join(violation_summary)}."
-                    else:
-                        engine_message = "No engines significantly deviate from the fuel_combined ±3% threshold."
-                    
-                    # Display the summary with the engine message in a styled box
-                    st.markdown(
-                        f"""
-                        <div style='background-color: #FFCDD2; padding: 10px; border-radius: 5px;'>
-                            <span style='color: #D32F2F; font-weight: bold; font-size: 24px;'>A fuel leak was detected in this sequence.</span><br>
-                            <span style='color: #D32F2F; font-weight: bold; font-size: 20px;'>{engine_message}</span>
-                        </div>
-                        """, 
-                        unsafe_allow_html=True
-                    )
-                else:
-                    st.write("**Prediction Summary: No Leak Detected**", unsafe_allow_html=True)
+
+                # Display the filtered table
+                st.markdown("### Prediction Output", unsafe_allow_html=True)
+                st.dataframe(prediction_df, use_container_width=True, height=400)
+
+                # Display LEAK DETECTED sign if leaks are found
+                if any(violation != "None" for violation in threshold_violations):
                     st.markdown(
                         """
-                        <div style='background-color: #C8E6C9; padding: 10px; border-radius: 5px;'>
-                            <span style='color: #2E7D32; font-weight: bold; font-size: 24px;'>No fuel leak was detected in this sequence.</span>
+                        <div style='background-color: #FFCDD2; padding: 20px; border-radius: 10px; margin-top: 20px;'>
+                            <h1 style='color: #D32F2F; text-align: center;'>LEAK DETECTED!</h1>
                         </div>
                         """, 
                         unsafe_allow_html=True
                     )
+
 
                 st.image("airbus_streamlit.jpeg")
 
                 # Display precision
+                st.markdown("### Precision")
                 precision = 0.9117
                 st.metric("Precision", f"{precision:.2%}")
                 
